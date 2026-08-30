@@ -4,41 +4,6 @@ Infraestrutura como código para provisionar uma VPC na AWS com sub-redes públi
 
 ## Arquitetura
 
-```mermaid
-flowchart TB
-    Internet((Internet)) --> IGW[Internet Gateway]
-
-    subgraph VPC["VPC 10.0.0.0/16"]
-        subgraph AZA[Zona a]
-            PUBA["Pública 10.0.48.0/24"]
-            PRIVA["Privada 10.0.0.0/20"]
-            DBA["Banco 10.0.51.0/24"]
-            NATA[NAT Gateway]
-            PRIVA --> NATA --> PUBA
-        end
-
-        subgraph AZB[Zona b]
-            PUBB["Pública 10.0.49.0/24"]
-            PRIVB["Privada 10.0.16.0/20"]
-            DBB["Banco 10.0.52.0/24"]
-            NATB[NAT Gateway]
-            PRIVB --> NATB --> PUBB
-        end
-
-        subgraph AZC[Zona c]
-            PUBC["Pública 10.0.50.0/24"]
-            PRIVC["Privada 10.0.32.0/20"]
-            DBC["Banco 10.0.53.0/24"]
-            NATC[NAT Gateway]
-            PRIVC --> NATC --> PUBC
-        end
-    end
-
-    IGW --> PUBA
-    IGW --> PUBB
-    IGW --> PUBC
-```
-
 O projeto cria:
 
 - uma VPC `10.0.0.0/16`, com suporte e hostnames DNS habilitados;
