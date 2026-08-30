@@ -1,0 +1,3 @@
+project_name="aws-vpc"
+region="us-east-1"  
+environment="sandbox"

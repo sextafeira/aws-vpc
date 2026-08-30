@@ -1,12 +1,28 @@
-.terraform/
+# Terraform working directories
+**/.terraform/*
+
+# State files
 *.tfstate
 *.tfstate.*
-.terraform.lock.hcl
+
+# Crash logs
 crash.log
 crash.*.log
+
+# Variable files can contain credentials and environment-specific values
 *.tfvars
 *.tfvars.json
+
+# The live directory contains the reviewed environment configuration
+!live/**/*.tfvars
+!live/**/*.tfvars.json
+
+# Local override files
 override.tf
 override.tf.json
 *_override.tf
 *_override.tf.json
+
+# Terraform CLI configuration
+.terraformrc
+terraform.rc
