@@ -4,6 +4,8 @@ Infraestrutura como código para provisionar uma VPC na AWS com sub-redes públi
 
 ## Arquitetura
 
+![AWS VPC architecture](docs/arquitetura.png)
+
 O projeto cria:
 
 - uma VPC `10.0.0.0/16`, com suporte e hostnames DNS habilitados;
