@@ -13,7 +13,8 @@ O projeto cria:
 - três sub-redes privadas, cada uma com saída por um NAT Gateway na mesma zona;
 - três sub-redes isoladas destinadas à camada de banco de dados;
 - três Elastic IPs, um para cada NAT Gateway;
-- tags de projeto, ambiente e gerenciamento por Terraform nos recursos.
+- tags de projeto, ambiente e gerenciamento por Terraform nos recursos;
+- parâmetros SSM com o ID da VPC e de todas as subnets para outros projetos.
 
 ### Plano de endereçamento
 
@@ -24,6 +25,19 @@ O projeto cria:
 | Banco de dados | `10.0.51.0/24` | `10.0.52.0/24` | `10.0.53.0/24` |
 
 As zonas são formadas acrescentando `a`, `b` e `c` à região informada. Por exemplo, `us-east-1` utiliza `us-east-1a`, `us-east-1b` e `us-east-1c`. Confirme se a região escolhida oferece essas três zonas para a sua conta.
+
+## IDs publicados no Parameter Store
+
+O arquivo `parameters_store.tf` publica os IDs abaixo com nomes fixos. Aplique esta VPC antes dos projetos que consultam os parâmetros, na mesma conta e região.
+
+| Recurso | Parâmetro |
+| --- | --- |
+| VPC | `/aws-vpc/vpc_id` |
+| Públicas A, B e C | `/aws-vpc/public_subnet_1a_id`, `/aws-vpc/public_subnet_1b_id`, `/aws-vpc/public_subnet_1c_id` |
+| Privadas A, B e C | `/aws-vpc/private_subnet_1a_id`, `/aws-vpc/private_subnet_1b_id`, `/aws-vpc/private_subnet_1c_id` |
+| Banco A, B e C | `/aws-vpc/database_subnet_1a_id`, `/aws-vpc/database_subnet_1b_id`, `/aws-vpc/database_subnet_1c_id` |
+
+Se esses parâmetros já foram criados pelo antigo projeto `aws-session-manager`, confira os dois estados antes de aplicar: a mudança de nome do parâmetro SSM exige substituir ou migrar o recurso, e nenhum recurso deve ser gerenciado por dois estados ao mesmo tempo.
 
 ## Pré-requisitos
 
@@ -108,6 +122,7 @@ terraform apply tfplan.destroy
 | `private_subnets.tf` | Cria sub-redes e rotas privadas |
 | `database_subnets.tf` | Cria as sub-redes de banco de dados |
 | `nat_gateway.tf` | Cria Elastic IPs e NAT Gateways |
+| `parameters_store.tf` | Publica IDs da VPC e das nove subnets no Parameter Store |
 
 ## Observações
 
