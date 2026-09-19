@@ -1,3 +1,3 @@
 bucket = ""
-key = "aws-vpc/sandbox/state"
+key    = "aws-vpc/sandbox/state"
 region = "us-east-1"
